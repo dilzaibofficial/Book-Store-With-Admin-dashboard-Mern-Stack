@@ -43,12 +43,19 @@ const BookDetails = ({ handleAddToCart }) => {
 
   return (
     <div className="container mt-5">
-      <h1>{book.name}</h1>
-      <p>Author: {book.author}</p>
-      <p>Price: ${book.price}</p>
-      <p>Category: {book.category}</p>
-      <p>Availability: {book.availability ? 'Available' : 'Out of Stock'}</p>
-      <button className="btn btn-primary" onClick={handleAdd}>Add to Cart</button>
+      <div className="row">
+        <div className="col-md-6">
+          <img src={`http://localhost:5000/uploads/${book.image}`} className="img-fluid" alt={book.name} />
+        </div>
+        <div className="col-md-6">
+          <h1>{book.name}</h1>
+          <p>Author: {book.author}</p>
+          <p>Price: ${book.price}</p>
+          <p>Category: {book.category}</p>
+          <p>Availability: {book.availability ? 'Available' : 'Out of Stock'}</p>
+          <button className="btn btn-primary" onClick={handleAdd}>Add to Cart</button>
+        </div>
+      </div>
     </div>
   );
 };

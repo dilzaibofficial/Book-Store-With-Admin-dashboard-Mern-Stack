@@ -45,4 +45,46 @@ const getCart = async (req, res) => {
   }
 };
 
-module.exports = { addToCart, getCart };
+const clearCart = async (req, res) => {
+  try {
+    const cart = await Cart.findOne({ userId: req.session.user._id });
+
+    if (cart) {
+      cart.items = [];
+      await cart.save();
+      res.json({ message: 'Cart cleared' });
+    } else {
+      res.status(404).json({ message: 'Cart not found' });
+    }
+  } catch (error) {
+    console.error('Error clearing cart:', error.message);
+    res.status(500).json({ message: 'Failed to clear cart' });
+  }
+};
+
+const updateCartItemQuantity = async (req, res) => {
+  const { bookId, quantity } = req.body;
+
+  try {
+    let cart = await Cart.findOne({ userId: req.session.user._id });
+
+    if (cart) {
+      const itemIndex = cart.items.findIndex(item => item.bookId.toString() === bookId);
+
+      if (itemIndex > -1) {
+        cart.items[itemIndex].quantity = quantity;
+        cart = await cart.save();
+        res.status(200).json(cart);
+      } else {
+        res.status(404).json({ message: 'Item not found in cart' });
+      }
+    } else {
+      res.status(404).json({ message: 'Cart not found' });
+    }
+  } catch (error) {
+    console.error('Error updating cart item quantity:', error.message);
+    res.status(500).json({ message: 'Failed to update cart item quantity' });
+  }
+};
+
+module.exports = { addToCart, getCart, clearCart, updateCartItemQuantity };

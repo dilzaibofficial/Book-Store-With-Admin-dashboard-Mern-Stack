@@ -1,4 +1,18 @@
 const Book = require('../models/Book');
+const multer = require('multer');
+const path = require('path');
+
+// Set up multer for image uploads
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'uploads/');
+  },
+  filename: (req, file, cb) => {
+    cb(null, `${Date.now()}-${file.originalname}`);
+  },
+});
+
+const upload = multer({ storage });
 
 const getBooks = async (req, res) => {
   try {
@@ -24,6 +38,7 @@ const getBookById = async (req, res) => {
 
 const addBook = async (req, res) => {
   const { name, author, price, category, availability } = req.body;
+  const image = req.file ? req.file.filename : '';
 
   try {
     const book = new Book({
@@ -32,6 +47,7 @@ const addBook = async (req, res) => {
       price,
       category,
       availability,
+      image,
     });
 
     const createdBook = await book.save();
@@ -43,6 +59,7 @@ const addBook = async (req, res) => {
 
 const updateBook = async (req, res) => {
   const { name, author, price, category, availability } = req.body;
+  const image = req.file ? req.file.filename : '';
 
   try {
     const book = await Book.findById(req.params.id);
@@ -53,6 +70,9 @@ const updateBook = async (req, res) => {
       book.price = price;
       book.category = category;
       book.availability = availability;
+      if (image) {
+        book.image = image;
+      }
 
       const updatedBook = await book.save();
       res.json(updatedBook);
@@ -64,19 +84,25 @@ const updateBook = async (req, res) => {
   }
 };
 
+
 const deleteBook = async (req, res) => {
   try {
+    console.log(`Attempting to delete book with ID: ${req.params.id}`);
     const book = await Book.findById(req.params.id);
 
     if (book) {
       await book.remove();
+      console.log(`Book with ID: ${req.params.id} removed successfully`);
       res.json({ message: 'Book removed' });
     } else {
+      console.log(`Book with ID: ${req.params.id} not found`);
       res.status(404).json({ message: 'Book not found' });
     }
   } catch (error) {
+    console.error('Error deleting book:', error);
     res.status(500).json({ message: 'Failed to delete book' });
   }
 };
 
-module.exports = { getBooks, getBookById, addBook, updateBook, deleteBook };
+
+module.exports = { getBooks, getBookById, addBook, updateBook, deleteBook, upload };

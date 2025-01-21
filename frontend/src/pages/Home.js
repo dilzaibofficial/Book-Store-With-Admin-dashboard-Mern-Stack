@@ -4,6 +4,7 @@ import { Carousel } from 'react-bootstrap';
 import slide1 from '../uploads/slide1.jpg';
 import slide2 from '../uploads/slide2.jpg';
 import slide3 from '../uploads/slide3.jpg';
+import './style.css'
 
 const Home = () => {
   const [books, setBooks] = useState([]);
@@ -26,7 +27,7 @@ const Home = () => {
       <Carousel>
         <Carousel.Item>
           <img
-            className="d-block w-100 h-50"
+            className="d-block w-100"
             src={slide1}
             alt="First slide"
             style={{ height: '150px', objectFit: 'cover' }}
@@ -38,7 +39,7 @@ const Home = () => {
         </Carousel.Item>
         <Carousel.Item>
           <img
-            className="d-block w-100 h-50"
+            className="d-block w-100"
             src={slide2}
             alt="Second slide"
             style={{ height: '150px', objectFit: 'cover' }}
@@ -50,7 +51,7 @@ const Home = () => {
         </Carousel.Item>
         <Carousel.Item>
           <img
-            className="d-block w-100 h-50"
+            className="d-block w-100"
             src={slide3}
             alt="Third slide"
             style={{ height: '150px', objectFit: 'cover' }}
@@ -68,11 +69,10 @@ const Home = () => {
           {books.map((book) => (
             <div className="col-md-4 mb-4" key={book._id}>
               <div className="card">
-                <img src={book.image} className="card-img-top" alt={book.title} />
+                <img src={`http://localhost:5000/uploads/${book.image}`} className="card-img-top" alt={book.name} />
                 <div className="card-body">
                   <h5 className="card-title">{book.name}</h5>
                   <p className="card-text"><strong>Author:</strong> {book.author}</p>
-                  {/* <p className="card-text">{book.description}</p> */}
                   <p className="card-text"><strong>Price:</strong> ${book.price}</p>
                   <a href={`/books/${book._id}`} className="btn btn-primary">View Details</a>
                 </div>

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import './style.css'
 
 const BookList = () => {
   const [books, setBooks] = useState([]);
@@ -27,6 +28,7 @@ const BookList = () => {
         {books.map((book) => (
           <div className="col-md-4" key={book._id}>
             <div className="card mb-4">
+              <img src={`http://localhost:5000/uploads/${book.image}`} className="card-img-top" alt={book.name} />
               <div className="card-body">
                 <h5 className="card-title">{book.name}</h5>
                 <p className="card-text">Author: {book.author}</p>

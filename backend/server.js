@@ -9,6 +9,7 @@ const adminRoutes = require('./routes/adminRoutes');
 const cors = require('cors');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
+const path = require('path');
 
 dotenv.config();
 
@@ -29,6 +30,9 @@ app.use(session({
   store: MongoStore.create({ mongoUrl: process.env.MONGO_URI }),
   cookie: { secure: false } // Set to true if using HTTPS
 }));
+
+// Serve static files from the uploads directory
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 app.use('/api/users', userRoutes);
 app.use('/api/books', bookRoutes);
