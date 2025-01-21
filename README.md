@@ -4,10 +4,10 @@
 ![Admin Dashboard](main/screenshots/adminDashboard.png)
 
 ### Books Page
-![Books](screenshots/books.png)
+![Books](screenshot/books.png)
 
 ### Login Page
-![Login Page](/screenshots/login.png)
+![Login Page](/screenshot/login.png)
 
 ### Manage Books
 ![Manage Books](main/screenshots/manageBooks.png)
