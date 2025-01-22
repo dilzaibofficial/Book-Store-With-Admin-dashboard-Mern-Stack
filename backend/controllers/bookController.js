@@ -88,10 +88,11 @@ const updateBook = async (req, res) => {
 const deleteBook = async (req, res) => {
   try {
     console.log(`Attempting to delete book with ID: ${req.params.id}`);
-    const book = await Book.findById(req.params.id);
+    
+    // Use findByIdAndDelete directly to delete the book
+    const book = await Book.findByIdAndDelete(req.params.id);
 
     if (book) {
-      await book.remove();
       console.log(`Book with ID: ${req.params.id} removed successfully`);
       res.json({ message: 'Book removed' });
     } else {

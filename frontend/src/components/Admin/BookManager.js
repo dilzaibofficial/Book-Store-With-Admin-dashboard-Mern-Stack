@@ -69,14 +69,16 @@ const BookManager = () => {
   };
 
   const handleDeleteBook = async (id) => {
+    console.log("Deleting book with ID:", id);  // Add this line to debug
     try {
       await axios.delete(`http://localhost:5000/api/books/${id}`);
-      setBooks(books.filter((b) => b._id !== id));
+      setBooks(books.filter((b) => b._id !== id)); // Remove the deleted book from the list
     } catch (error) {
+      console.log(error);  // Log the error to see the issue
       setError('Failed to delete book');
     }
   };
-
+  
   return (
     <div className="container mt-5">
       <div className="row">
