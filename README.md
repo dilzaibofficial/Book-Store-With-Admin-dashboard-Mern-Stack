@@ -1,4 +1,4 @@
-(screenshot/template.png)
+![Image](https://github.com/user-attachments/assets/a51b83c7-1655-40dd-bae2-50efbe5c4a27)
 ## Project Overview
 The E-Bookstore project is a full-stack web application designed to provide users with an online platform to browse, purchase, and manage books. The application includes features for user registration, login, book browsing, cart management, order placement, and an admin dashboard for managing books and viewing sales.
 
